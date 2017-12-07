@@ -94,26 +94,6 @@ namespace UserDetail.Controllers
             }
         }
 
-  //      [HttpPut("add/id={id}&name={name}&email={email}&phoneNumber={phoneNumber}&address={address}&canBuy={canBuy}", Name = "Edit a User")]
-  //      public async Task<IActionResult> PutUser([FromRoute] string id, [FromRoute] string name, [FromRoute] string email, [FromRoute] long phoneNumber, [FromRoute] string address, [FromRoute] Boolean canBuy)
-  //      {
-  //          if (!ModelState.IsValid)
- //           {
-  //              return BadRequest(ModelState);
-  //          }
-  //          if (!_context.User.Where(b => b.id == id && b.name == name && b.email == email && b.phoneNumber == phoneNumber && b.address == address && b.canBuy == canBuy).Any())
- //           {
-  //              return NotFound("No item found with those arguments");
-  //          }
-//            else
-//            {
- //               var userItem = _context.User.FirstOrDefault(b => b.id == id && b.name == name && b.email == email && b.phoneNumber == phoneNumber && b.address == address && b.canBuy == canBuy);
- //               _context.Update(userItem);
- //               await _context.SaveChangesAsync();
- //               return Ok(userItem);
- //           }
- //       }
-
         // DELETE: api/user/1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] string id)
