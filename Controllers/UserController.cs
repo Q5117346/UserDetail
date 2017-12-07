@@ -5,24 +5,50 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UserDetail.Data;
 using Microsoft.AspNetCore.Authorization;
+using UserDetail.Models;
+using UserDetail.Data;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserDetail.Controllers
 {
     public class UserController : Controller
     {
+        IConfiguration configuration;
         UserContext _context;
+
+        public UserController(IConfiguration configuration, UserContext context)
+        {
+            this.configuration = configuration;
+            this._context = context;
+        }
 
         public UserController(UserContext context)
         {
             _context = context;
         }
-        [Authorize]
-        public IActionResult Index()
+
+        public async Task<IActionResult> IndexAsync()
         {
-            //var userId = "test-id";
-            var userId = User.Claims.Where(uId => uId.Type == "User_Id").Select(c => c.Value).SingleOrDefault();
-            //var user = _context.User.Where(b => b.id == userId).ToList();
-            return View(userId);
+            return View(await _context.User.ToListAsync());
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("id,name,email,phoneNumber,address,canBuy")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(IndexAsync));
+            }
+            return View(user);
         }
     }
 }

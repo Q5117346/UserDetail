@@ -17,7 +17,7 @@ namespace UserDetail.Data
 #if DEBUG
             List<User> testUsers = new List<User>();
 
-            testUsers.Add(new User {id="test-id", name = "Test Name", email = "Test@email.com", phoneNumber = 12345678910, address = "1 Test Road Testville", canBuy = false });
+            testUsers.Add(new User {id="test-id", name = "Test Name", email = "Test@email.com", phoneNumber = 12345678910, address = "1 Test Road Testville", canBuy = false});
 
             context.User.AddRange(testUsers);
 
