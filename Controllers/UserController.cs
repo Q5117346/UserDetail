@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using UserDetail.Data;
 using Microsoft.AspNetCore.Authorization;
 using UserDetail.Models;
-using UserDetail.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 

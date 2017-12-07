@@ -11,7 +11,7 @@ namespace UserDetail.Data
         public static void Initialize(UserContext context)
         {
 #if DEBUG
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
 #endif
             context.Database.EnsureCreated();
 #if DEBUG

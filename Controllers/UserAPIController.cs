@@ -59,75 +59,60 @@ namespace UserDetail.Controllers
         }
 
         // POST: api/user
-        //[HttpPost("add/id={id}&name={name}&email={email}&phoneNumber={phoneNumber}&address={address}&canBuy={canBuy}")]
-        // public async Task<IActionResult> PostUser([Bind("id,name,email,phoneNumber,address,canBuy")] User user)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //     _context.User.Add(user);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetUser", new { id = user.id }, user);
-        //  }
-
-        [HttpPost("add/id={id}&name={name}&email={email}&phoneNumber={phoneNumber}&address={address}&canBuy={canBuy}", Name = "Add a User")]
-        public async Task<IActionResult> PostUser([FromRoute] string id, [FromRoute] string name, [FromRoute] string email, [FromRoute] long phoneNumber, [FromRoute] string address, [FromRoute] Boolean canBuy)
-        {
-            if (!ModelState.IsValid)
-            {
+         [HttpPost]
+         public async Task<IActionResult> PostUser([FromBody] User user)
+         {
+             if (!ModelState.IsValid)
+             {
                 return BadRequest(ModelState);
-            }
-            else
-            {
-                var UserItem = _context.User.FirstOrDefault(b => b.id == id && b.name == name && b.email == email && b.phoneNumber == phoneNumber && b.address == address && b.canBuy == canBuy);
-                await _context.SaveChangesAsync();
-                return Ok(User);
-            }
-        }
+             }
+ 
+             _context.User.Add(user);
+             await _context.SaveChangesAsync();
+ 
+             return CreatedAtAction("GetUser", new { id = user.id}, user);
+         }
 
         // PUT: api/user/1
-  //      [HttpPut("{id}")]
-   //     public async Task<IActionResult> PutUser([FromRoute] string id, [FromBody] User user)
-   //     {
-   //         if (!ModelState.IsValid)
-   //         {
-   //             return BadRequest(ModelState);
-   //         }
-
-  //          if (id != user.id)
-  //          {
-  //              return NoContent();
-  //          }
-  //          else
-  //          {
-  //              _context.Update(user);
-   //             await _context.SaveChangesAsync();
-  //              return Ok(user);
-  //          }
- //       }
-
-        [HttpPut("add/id={id}&name={name}&email={email}&phoneNumber={phoneNumber}&address={address}&canBuy={canBuy}", Name = "Edit a User")]
-        public async Task<IActionResult> PutUser([FromRoute] string id, [FromRoute] string name, [FromRoute] string email, [FromRoute] long phoneNumber, [FromRoute] string address, [FromRoute] Boolean canBuy)
+        [HttpPut("{id}", Name = "PutUser")]
+        public async Task<IActionResult> PutUser([FromRoute] string id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (!_context.User.Where(b => b.id == id && b.name == name && b.email == email && b.phoneNumber == phoneNumber && b.address == address && b.canBuy == canBuy).Any())
+
+            if (id != user.id)
             {
-                return NotFound("No item found with those arguments");
+               return NoContent();
             }
             else
             {
-                var userItem = _context.User.FirstOrDefault(b => b.id == id && b.name == name && b.email == email && b.phoneNumber == phoneNumber && b.address == address && b.canBuy == canBuy);
-                _context.Update(userItem);
+                _context.Update(user);
                 await _context.SaveChangesAsync();
-                return Ok(userItem);
+               return Ok(user);
             }
         }
+
+  //      [HttpPut("add/id={id}&name={name}&email={email}&phoneNumber={phoneNumber}&address={address}&canBuy={canBuy}", Name = "Edit a User")]
+  //      public async Task<IActionResult> PutUser([FromRoute] string id, [FromRoute] string name, [FromRoute] string email, [FromRoute] long phoneNumber, [FromRoute] string address, [FromRoute] Boolean canBuy)
+  //      {
+  //          if (!ModelState.IsValid)
+ //           {
+  //              return BadRequest(ModelState);
+  //          }
+  //          if (!_context.User.Where(b => b.id == id && b.name == name && b.email == email && b.phoneNumber == phoneNumber && b.address == address && b.canBuy == canBuy).Any())
+ //           {
+  //              return NotFound("No item found with those arguments");
+  //          }
+//            else
+//            {
+ //               var userItem = _context.User.FirstOrDefault(b => b.id == id && b.name == name && b.email == email && b.phoneNumber == phoneNumber && b.address == address && b.canBuy == canBuy);
+ //               _context.Update(userItem);
+ //               await _context.SaveChangesAsync();
+ //               return Ok(userItem);
+ //           }
+ //       }
 
         // DELETE: api/user/1
         [HttpDelete("{id}")]
